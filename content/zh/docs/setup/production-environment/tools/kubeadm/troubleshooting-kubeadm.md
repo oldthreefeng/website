@@ -355,6 +355,20 @@ Unable to connect to the server: x509: certificate signed by unknown authority (
   sudo chown $(id -u):$(id -g) $HOME/.kube/config
   ```
 
+- 还有可能是使用了http/https代理导致证书不可用, 取消使用代理:
+
+  ```shell
+  unset http_proxy https_proxy 
+  ```
+  
+- 或者使用no_proxy将:
+
+  ```shell
+  YOUR-APISERVER=$(cat /etc/kubernetes/admin.conf | awk -F'//' '/server/{print $2}' | awk -F':' '{print $1}')
+  export no_proxy=YOUR-APISERVER
+  ```
+
+
 <!--
 ## Default NIC When using flannel as the pod network in Vagrant
 
